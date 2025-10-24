@@ -28,9 +28,13 @@ const Experience = () => {
     return (
         <section id="experience" className="py-20 bg-gray-800">
             <div className="container mx-auto px-8 md:px-12 lg:px-16 xl:px-20">
-                <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                <h2 className="text-4xl text-center font-bold mb-4" data-aos="fade-up">
                     Experience
+
                 </h2>
+                <div className="w-24 h-1 mt-5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8"></div>
+
+
                 <div className="grid md:grid-cols-2 gap-8">
                     {experiences.map((exp, index) => (
                         <div

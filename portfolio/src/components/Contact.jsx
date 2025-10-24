@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
 const Contact = () => {
@@ -11,32 +13,32 @@ const Contact = () => {
         message: ''
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [submitStatus, setSubmitStatus] = useState('')
 
+    // ✅ Handle Form Submission
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
-        setSubmitStatus('')
 
         try {
-            // Replace with your EmailJS service details
+            // Replace with your EmailJS credentials
             const result = await emailjs.send(
-                'YOUR_SERVICE_ID',
-                'YOUR_TEMPLATE_ID',
+                'service_so4lhsn',        // ✅ Your EmailJS Service ID
+                'contact_form',    // ✅ Your Template ID
                 {
                     from_name: formData.name,
                     from_email: formData.email,
                     subject: formData.subject,
                     message: formData.message,
                 },
-                'YOUR_PUBLIC_KEY'
+                'jRlEEviVdH5LRWw9O'      // ✅ Your Public Key
             )
 
-            setSubmitStatus('success')
+            console.log('Email sent successfully:', result.text)
+            toast.success('✅ Message sent successfully!')
             setFormData({ name: '', email: '', subject: '', message: '' })
         } catch (error) {
             console.error('Error sending email:', error)
-            setSubmitStatus('error')
+            toast.error('❌ Failed to send message. Please try again.')
         } finally {
             setIsSubmitting(false)
         }
@@ -70,7 +72,9 @@ const Contact = () => {
     ]
 
     return (
-        <section id="contact" className="py-20 bg-gray-800">
+        <section id="contact" className="py-20 bg-gray-800 text-white">
+            <ToastContainer position="top-center" autoClose={3000} theme="dark" />
+
             <div className="container mx-auto px-8 md:px-12 lg:px-16 xl:px-20">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -82,12 +86,12 @@ const Contact = () => {
                     <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8"></div>
                     <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                         Have a project in mind or want to collaborate? I'd love to hear from you.
-                        Let's discuss how we can work together to bring your ideas to life.
+                        Let's discuss how we can bring your ideas to life.
                     </p>
                 </motion.div>
 
                 <div className="grid lg:grid-cols-2 gap-12">
-                    {/* Contact Information */}
+                    {/* Contact Info */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -150,21 +154,9 @@ const Contact = () => {
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="bg-gray-700 p-8 rounded-lg"
+                        className="bg-gray-700 p-8 rounded-lg shadow-lg"
                     >
                         <h3 className="text-2xl font-bold mb-6 text-white">Send Message</h3>
-
-                        {submitStatus === 'success' && (
-                            <div className="mb-6 p-4 bg-green-600 text-white rounded-lg">
-                                Thank you! Your message has been sent successfully.
-                            </div>
-                        )}
-
-                        {submitStatus === 'error' && (
-                            <div className="mb-6 p-4 bg-red-600 text-white rounded-lg">
-                                Sorry, there was an error sending your message. Please try again.
-                            </div>
-                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-4">
@@ -173,7 +165,7 @@ const Contact = () => {
                                     <input
                                         type="text"
                                         required
-                                        className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
+                                        className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         placeholder="Your Name"
@@ -184,7 +176,7 @@ const Contact = () => {
                                     <input
                                         type="email"
                                         required
-                                        className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
+                                        className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         placeholder="your.email@example.com"
@@ -197,7 +189,7 @@ const Contact = () => {
                                 <input
                                     type="text"
                                     required
-                                    className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
+                                    className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                     value={formData.subject}
                                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                     placeholder="What's this about?"
@@ -209,7 +201,7 @@ const Contact = () => {
                                 <textarea
                                     required
                                     rows={6}
-                                    className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white resize-none"
+                                    className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white resize-none"
                                     value={formData.message}
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                     placeholder="Tell me about your project or idea..."

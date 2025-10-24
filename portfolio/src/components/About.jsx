@@ -140,6 +140,8 @@ const About = () => {
                             className="text-center"
                         >
                             <h3 className="text-3xl font-bold mb-4">Technical Skills</h3>
+                            <div className="w-24 h-1 mt-5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8"></div>
+
                             <p className="text-gray-400 text-lg">Technologies I work with</p>
                         </motion.div>
 
