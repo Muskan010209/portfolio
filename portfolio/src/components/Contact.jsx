@@ -14,27 +14,36 @@ const Contact = () => {
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    // ✅ Handle Form Submission
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
 
         try {
-            // Replace with your EmailJS credentials
-            const result = await emailjs.send(
-                'service_so4lhsn',        // ✅ Your EmailJS Service ID
-                'contact_form',    // ✅ Your Template ID
+            // 1️⃣ Send message to YOU
+            await emailjs.send(
+                'service_so4lhsn',  // your service ID
+                'contact_form',     // your template ID (message to you)
                 {
                     from_name: formData.name,
                     from_email: formData.email,
                     subject: formData.subject,
                     message: formData.message,
                 },
-                'jRlEEviVdH5LRWw9O'      // ✅ Your Public Key
+                'jRlEEviVdH5LRWw9O'
             )
 
-            console.log('Email sent successfully:', result.text)
-            toast.success('✅ Message sent successfully!')
+            // 2️⃣ Auto-reply to sender
+            await emailjs.send(
+                'service_so4lhsn',
+                'auto_reply',
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                },
+                'jRlEEviVdH5LRWw9O'
+            )
+
+            toast.success('✅ Message sent successfully! Check your inbox for confirmation.')
             setFormData({ name: '', email: '', subject: '', message: '' })
         } catch (error) {
             console.error('Error sending email:', error)
@@ -43,6 +52,7 @@ const Contact = () => {
             setIsSubmitting(false)
         }
     }
+
 
     const contactInfo = [
         {
