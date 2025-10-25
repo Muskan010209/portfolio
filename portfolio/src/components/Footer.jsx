@@ -17,7 +17,6 @@ const Footer = () => {
         { icon: <FaGithub />, href: "https://github.com/Muskan010209", color: "hover:text-white" },
         { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/muskan-rajput01", color: "hover:text-blue-400" },
         { icon: <FaTwitter />, href: "https://x.com/kamuskan01?s=11", color: "hover:text-blue-300" },
-        { icon: <FaEnvelope />, href: "mailto:kamuskan01@gmail.com", color: "hover:text-red-400" }
     ]
 
     return (
